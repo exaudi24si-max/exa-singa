@@ -10,54 +10,140 @@
     <!-- Custom CSS -->
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
         }
 
-        .navbar-brand {
-            font-weight: bold;
-        }
-
+        /* Navbar */
         .navbar {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(90deg, #1e88e5, #42a5f5);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
 
+        .navbar-brand,
+        .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: #ffeb3b !important;
+        }
+
+        /* Hero Section */
         .hero-section {
-            background-color: #3187e9;
+            background: linear-gradient(135deg, #42a5f5, #1e88e5);
             color: white;
-            padding: 50px 0;
+            padding: 60px 20px;
             text-align: center;
+            border-radius: 0 0 25px 25px;
         }
 
         .hero-section h1 {
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
         }
 
+        .hero-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Card */
         .card {
-            margin-top: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease-in-out;
         }
 
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #1e88e5;
+        }
+
+        /* Accordion */
+        .accordion-button {
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: #1e88e5;
+            border-color: #1e88e5;
+        }
+
+        .btn-primary:hover {
+            background-color: #1565c0;
+            border-color: #1565c0;
+        }
+
+        /* Table */
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background-color: #e3f2fd;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f8ff;
+        }
+
+        /* Footer */
         .footer {
-            margin-top: 50px;
+            margin-top: 60px;
             padding: 20px 0;
-            background-color: #f8f9fa;
+            background-color: #1e88e5;
             text-align: center;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         .footer p {
             margin: 0;
-            font-size: 0.9rem;
-            color: #6c757d;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 40px 15px;
+            }
+
+            .card {
+                margin-top: 15px;
+            }
+
+            .d-flex.flex-wrap.gap-2 {
+                flex-direction: column;
+            }
         }
     </style>
+
 </head>
 
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">My Laravel App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#">EXAUDI BN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -82,7 +168,7 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-           <h1> {{ $name }} </h1>
+            <h1> {{ $name }} </h1>
             <p class="lead mb-0">A simple and elegant app using Bootstrap 5 and Laravel Blade.</p>
         </div>
     </section>
@@ -95,7 +181,9 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">About Our Application</h5>
-                        <p class="card-text">Our application provides a clean and intuitive interface, allowing users to navigate easily and perform tasks efficiently. Built with Laravel and Bootstrap, it offers flexibility and responsiveness.</p>
+                        <p class="card-text">Our application provides a clean and intuitive interface, allowing users to
+                            navigate easily and perform tasks efficiently. Built with Laravel and Bootstrap, it offers
+                            flexibility and responsiveness.</p>
                         <a href="#" class="btn btn-primary">Explore More</a>
                     </div>
                 </div>
@@ -104,11 +192,13 @@
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne">
                                 About Us
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse collapse show"
+                            data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 We are a tech company that specializes in web development solutions.
                             </div>
@@ -116,7 +206,8 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo">
                                 Our Services
                             </button>
                         </h2>
@@ -214,7 +305,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <p class="text-muted small mb-0">Tambahkan <code>.table-striped</code> atau <code>.table-bordered</code> sesuai kebutuhan.</p>
+                        <p class="text-muted small mb-0">Tambahkan <code>.table-striped</code> atau
+                            <code>.table-bordered</code> sesuai kebutuhan.</p>
                     </div>
                 </div>
             </div>
@@ -224,7 +316,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; {{date('Y')}} My Laravel App. All Rights Reserved.</p>
+            <p>&copy; {{ date('Y') }} My Laravel App. All Rights Reserved.</p>
         </div>
     </footer>
 
