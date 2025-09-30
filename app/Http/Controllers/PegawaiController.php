@@ -7,7 +7,7 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $data['name']               = 'EXAUDI BANJARNAHOR';
+        $data['name']               = 'EXAUDI BANJARNAHOR'; 
         $data['my_age']             = date('Y') - 2004;
         $data['hobbies']            = ['Membaca', 'Ngoding', 'Olahraga', 'Traveling', 'Main Musik'];
         $data['tgl_harus_wisuda']   = \Carbon\Carbon::createFromFormat('Y-m-d', '2027-08-30');
