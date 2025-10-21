@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('content')
-    {{-- start main content --}}
+    {{-- start mian content --}}
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
             <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
@@ -30,81 +30,56 @@
         </div>
     </div>
 
-
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card border-0 shadow components-section">
                 <div class="card-body">
-                    <form action="{{ route('pelanggan.store') }}" method="POST">
+
+                    <form action="{{ route('user.store') }}" method="POST">
                         @csrf
                         <div class="row mb-4">
                             <div class="col-lg-4 col-sm-6">
-                                <!-- First Name -->
+                                <!-- name -->
                                 <div class="mb-3">
-                                    <label for="first_name" class="form-label">First name</label>
-                                    <input type="text" id="first_name" name="first_name" class="form-control" required>
+                                    <label for="name" class="form-label">name</label>
+                                    <input type="text" id="name" name="name" value="{{ $dataUser->name}}"
+                                        class="form-control" required>
                                 </div>
-
-
-                                <!-- Last Name -->
+                                <!-- email -->
                                 <div class="mb-3">
-                                    <label for="last_name" class="form-label">Last name</label>
-                                    <input type="text" id="last_name" name="last_name" class="form-control" required>
-
-
+                                    <label for="email" class="form-label">email</label>
+                                    <input type="text" id="email" name="email" value="{{$dataUser->email}}"
+                                        class="form-control" required>
                                 </div>
                             </div>
-
-
                             <div class="col-lg-4 col-sm-6">
-                                <!-- Birthday -->
+                                <!-- password -->
                                 <div class="mb-3">
-                                    <label for="birthday" class="form-label">Birthday</label>
-                                    <input type="date" id="birthday" name= "birthday" class="form-control">
+                                    <label for="password" class="form-label">password</label>
+                                    <input type="password" id="password" name= "password" value="{{$dataUser->password}}"
+                                        class="form-control">
                                 </div>
-
-
-                                <!-- Gender -->
-                                <div class="mb-3">
-                                    <label for="gender" class="form-label">Gender</label>
-                                    <select id="gender" name="gender" class="form-select">
-                                        <option value="">-- Pilih --</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
+                                <div class="col-lg-4 col-sm-12">
+                                    <!-- confismation password -->
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Confirmation password</label>
+                                        <input type="password" id="password" value="{{$dataUser->password}}"
+                                            class="form-control" name="email" required>
+                                    </div>
                                 </div>
-                            </div>
-
-
-                            <div class="col-lg-4 col-sm-12">
-                                <!-- Email -->
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" id="email" class="form-control" name="email" required>
-                                </div>
-
-
-                                <!-- Phone -->
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Phone</label>
-                                    <input type="text" id="phone" class="form-control" name="phone">
-                                </div>
-
 
                                 <!-- Buttons -->
                                 <div class="">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                    <a href="{{ route('pelanggan.index') }}"
-                                        class="btn btn-outline-secondary ms-2">Batal</a>
+                                    <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
 
-
             </div>
         </div>
-        {{-- end mani content --}}
-    @endsection
+    </div>
+    {{-- end main content --}}
+@endsection
