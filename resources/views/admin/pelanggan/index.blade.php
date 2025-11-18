@@ -25,7 +25,8 @@
                 <p class="mb-0">List data seluruh pelanggan</p>
             </div>
             <div>
-                <a href="{{route('pelanggan.create')}}" class="btn btn-success text-white"><i class="far fa-question-circle me-1"></i>
+                <a href="{{ route('pelanggan.create') }}" class="btn btn-success text-white"><i
+                        class="far fa-question-circle me-1"></i>
                     Tambah Pelanggan</a>
             </div>
         </div>
@@ -91,11 +92,15 @@
                                 @endforeach
                             </tbody>
                         </table>
+
+                        <div class="mt-3">
+                            {{ $dataPelanggan->links('pagination::bootstrap-5') }}
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     {{-- end main content --}}
-
 @endsection

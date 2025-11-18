@@ -12,7 +12,7 @@ class PelangganController extends Controller
      */
     public function index()
     {
-      	$data['dataPelanggan'] = Pelanggan::all();
+      	$data['dataPelanggan'] = Pelanggan::paginate(10);
 		return view('admin.pelanggan.index',$data);
     }
 
@@ -49,7 +49,7 @@ class PelangganController extends Controller
      */
     public function show(string $id)
     {
-  
+
     }
 
     /**
