@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
+use App\Models\MultipleUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PelangganController extends Controller
 {
@@ -36,7 +38,6 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-
         // dd($request->all());
 
         $data['first_name'] = $request->first_name;
@@ -46,7 +47,20 @@ class PelangganController extends Controller
         $data['email']      = $request->email;
         $data['phone']      = $request->phone;
 
-        Pelanggan::create($data);
+        $pelanggan = Pelanggan::create($data);
+
+        // Handle multiple file upload
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = $file->store('pelanggan-files', 'public');
+
+                MultipleUpload::create([
+                    'filename' => $filename,
+                    'ref_table' => 'pelanggan',
+                    'ref_id' => $pelanggan->pelanggan_id
+                ]);
+            }
+        }
 
         return redirect()->route('pelanggan.index')->with('success', 'Penambahan Data Berhasil!');
     }
@@ -56,7 +70,8 @@ class PelangganController extends Controller
      */
     public function show(string $id)
     {
-
+        $data['dataPelanggan'] = Pelanggan::with('files')->findOrFail($id);
+        return view('admin.pelanggan.show', $data);
     }
 
     /**
@@ -64,7 +79,7 @@ class PelangganController extends Controller
      */
     public function edit(string $id)
     {
-        $data['dataPelanggan'] = Pelanggan::findOrFail($id);
+        $data['dataPelanggan'] = Pelanggan::with('files')->findOrFail($id);
         return view('admin.pelanggan.edit', $data);
     }
 
@@ -83,7 +98,21 @@ class PelangganController extends Controller
         $pelanggan->email      = $request->email;
         $pelanggan->phone      = $request->phone;
 
-        pelanggan->save();
+        $pelanggan->save();
+
+        // Handle multiple file upload
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = $file->store('pelanggan-files', 'public');
+
+                MultipleUpload::create([
+                    'filename' => $filename,
+                    'ref_table' => 'pelanggan',
+                    'ref_id' => $pelanggan->pelanggan_id
+                ]);
+            }
+        }
+
         return redirect()->route('pelanggan.index')->with('success', 'Perubahan Data Berhasil!');
     }
 
@@ -94,7 +123,31 @@ class PelangganController extends Controller
     {
         $pelanggan = Pelanggan::findOrFail($id);
 
+        // Hapus file terkait
+        foreach ($pelanggan->files as $file) {
+            if (Storage::exists('public/' . $file->filename)) {
+                Storage::delete('public/' . $file->filename);
+            }
+            $file->delete();
+        }
+
         $pelanggan->delete();
-        return redirect()->route('pelanggan.index')->with('succes', 'Data Berhasil Dihapus!');
+        return redirect()->route('pelanggan.index')->with('success', 'Data Berhasil Dihapus!');
+    }
+
+    /**
+     * Delete single file
+     */
+    public function deleteFile(string $id)
+    {
+        $file = MultipleUpload::findOrFail($id);
+
+        if (Storage::exists('public/' . $file->filename)) {
+            Storage::delete('public/' . $file->filename);
+        }
+
+        $file->delete();
+
+        return redirect()->back()->with('success', 'File berhasil dihapus!');
     }
 }

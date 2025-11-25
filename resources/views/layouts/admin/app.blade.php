@@ -36,6 +36,12 @@
     <link rel="mask-icon" href="{{ asset('assets-admin/img/favicon/safari-pinned-tab.svg') }}" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
+
+    {{--  --}}
+    <!-- Tambahkan ini -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {{--  --}}
+
     {{-- start css --}}
 
     <!-- Volt CSS -->

@@ -12,8 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data['dataUser'] = User::all();
-        return view('admin.User.index', $data);
+        $data['dataUser'] = user::all();
+        return view('admin.user.index', $data);
     }
 
     /**
@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.User.create');
+        return view('admin.user.create');
     }
 
     /**
@@ -29,21 +29,43 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'            => 'required',
+            'email'           => 'required|email|unique:users,email',
+            'password'        => 'required|min:6',
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-        // dd($request->all());
+        $data = [
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+        ];
 
-        $data['name']     = $request->name;
-        $data['email']    = $request->email;
-        $data['password'] = Hash::make($request->password);
+        // Upload Foto - PERBAIKI INI
+        if ($request->hasFile('profile_picture')) {
+            $data['profile_picture'] = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
 
         User::create($data);
 
-        return redirect()->route('user.index')->with('create', 'Penambahan Data Berhasil!');
+        return redirect()->route('user.index')->with('success', 'Penambahan Data Berhasil!');
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(string $id)
     {
-        $data['dataUser'] = User::findOrFail($id);
+        $data['dataUser'] = user::findOrFail($id);
         return view('admin.user.edit', $data);
 
     }
@@ -51,17 +73,53 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    // app/Http/Controllers/UserController.php - Update method
+    public function update(Request $request, User $user)
     {
-        $User_id = $id;
-        $User    = User::findOrFail($User_id);
+        $data = $request->validate([
+            'name'            => 'required|string',
+            'email'           => 'required|email|unique:users,email,' . $user->id,
+            'password'        => 'nullable|min:6|confirmed',
+            'profile_picture' => 'nullable|image|max:2048',
+            'remove_photo'    => 'nullable',
+        ]);
 
-        $User->name     = $request->name;
-        $User->email    = $request->email;
-        $User->password = $request->password;
+        // Handle hapus foto
+        if ($request->has('remove_photo')) {
+            if ($user->profile_picture && \Illuminate\Support\Facades\Storage::exists('public/' . $user->profile_picture)) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $user->profile_picture);
+            }
+            $data['profile_picture'] = null;
+        }
 
-        User->save();
-        return redirect()->route('user.update')->with('create', 'Perubahan Data Berhasil!');
+        // Handle upload foto baru
+        if ($request->hasFile('profile_picture')) {
+            // Hapus file lama jika ada
+            if ($user->profile_picture && \Illuminate\Support\Facades\Storage::exists('public/' . $user->profile_picture)) {
+                \Illuminate\Support\Facades\Storage::delete('public/' . $user->profile_picture);
+            }
+            $data['profile_picture'] = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
+
+        // Update password jika diisi
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        } else {
+            unset($data['password']);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('user.index')->with('success', 'User berhasil diperbarui.');
     }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        { $user = user::findOrFail($id);
 
+            $user->delete();
+            return redirect()->route('user.index')->with('succes', 'Perubahan Data Dihapus');}
+    }
 }
