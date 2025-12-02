@@ -44,21 +44,21 @@
         </div>
     @endif
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card border-0 shadow components-section">
                 <div class="card-body">
                     {{-- Penyesuaian form: action, method, csrf --}}
-                    <form action="{{ route('user.store') }}" method="POST"  enctype="multipart/form-data">
+                    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-4">
@@ -79,43 +79,56 @@
                                         value="{{ old('email') }}" required>
                                 </div>
 
-                                <div class="form-group mt-3">
-                                    <label class="font-weight-bold text-primary">Foto Profil</label>
-                                    <input type="file" name="profile_picture" class="form-control">
+                                <!-- Gender -->
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select id="role" name="role" class="form-select">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Pelanggan">Pelanggan</option>
+                                        <option value="Mitra">Mitra</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 col-sm-6">
-                                {{-- password --}}
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">password</label>
-                                    {{-- Penyesuaian: name dan old() --}}
-                                    <input type="password" id="password" name="password" class="form-control"
-                                        value="{{ old('password') }}">
-                                </div>
 
-
-                                {{-- confirmation_password --}}
-                                <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label">password_confirmation</label>
-                                    {{-- Penyesuaian: name dan old() --}}
-                                    <input type="password" id="password_confirmation" name="password_confirmation"
-                                        class="form-control" value="{{ old('password_confirmation') }}">
-                                </div>
-
-                                {{-- Buttons --}}
-                                <div class="">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                    {{-- Penyesuaian href tombol "Batal" --}}
-                                    <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
-                                </div>
+                            <div class="form-group mt-3">
+                                <label class="font-weight-bold text-primary">Foto Profil</label>
+                                <input type="file" name="profile_picture" class="form-control">
                             </div>
                         </div>
-                    </form>
-                </div>
 
+                        <div class="col-lg-4 col-sm-6">
+                            {{-- password --}}
+                            <div class="mb-3">
+                                <label for="password" class="form-label">password</label>
+                                {{-- Penyesuaian: name dan old() --}}
+                                <input type="password" id="password" name="password" class="form-control"
+                                    value="{{ old('password') }}">
+                            </div>
+
+
+                            {{-- confirmation_password --}}
+                            <div class="mb-3">
+                                <label for="password_confirmation" class="form-label">password_confirmation</label>
+                                {{-- Penyesuaian: name dan old() --}}
+                                <input type="password" id="password_confirmation" name="password_confirmation"
+                                    class="form-control" value="{{ old('password_confirmation') }}">
+                            </div>
+
+                            {{-- Buttons --}}
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                {{-- Penyesuaian href tombol "Batal" --}}
+                                <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
+                            </div>
+                        </div>
+                </div>
+                </form>
             </div>
+
         </div>
+    </div>
     </div>
     {{-- endmaincontent --}}
 @endsection

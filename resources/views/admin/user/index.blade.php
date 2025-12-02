@@ -49,9 +49,10 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th class="border-0">Nama Lengkap</th>
+                                    <th class="border-0">Nama</th>
                                     <th class="border-0">Email</th>
                                     <th class="border-0">Password</th>
-                                    <th class="border-0">Foto</th>
+                                    <th class="border-0">role</th>
                                     <th class="border-0">Action</th>
                                 </tr>
                             </thead>
@@ -76,9 +77,10 @@
                                             </div>
                                         </td>
 
+                                        <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->password }}</td> <!-- tetap tampil seperti sebelumnya -->
-
+                                        <td>{{ $item->role }}</td>
                                         <td>
                                             <a href="{{ route('user.edit', $item->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>

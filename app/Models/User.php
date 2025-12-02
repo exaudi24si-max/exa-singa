@@ -19,6 +19,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
         'profile_picture', // TAMBAHKAN INI
     ];
 

@@ -50,7 +50,9 @@ Route::post('question/store', [QuestionController::class, 'store'])
         ->name('question.store');
 
 
-Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class,'index'])
+->name('dashboard')
+->middleware('checkislogin');
 
 // PELANGGAN ROUTES - DIPERBAIKI
 Route::resource('pelanggan', PelangganController::class);
@@ -67,4 +69,10 @@ Route::delete('customer/file/{id}', [CustomerController::class, 'deleteFile'])->
 Route::get('auth', [AuthController::class, 'index'])->name('auth');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+
+Route::group(['middleware' => ['checkrole:Admin']], function () {
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+    /** List Route Lainnya */
+});
 
