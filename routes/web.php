@@ -64,7 +64,7 @@ Route::get('customer/{id}/detail', [CustomerController::class, 'detail'])->name(
 Route::post('customer/{id}/upload', [CustomerController::class, 'uploadFiles'])->name('customer.uploadFiles');
 Route::delete('customer/file/{id}', [CustomerController::class, 'deleteFile'])->name('customer.deleteFile');
 
-Route::resource('auth', AuthController::class);
+Route::get('auth', [AuthController::class, 'index'])->name('auth');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
