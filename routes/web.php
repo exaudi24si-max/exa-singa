@@ -2,15 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\MatakuliahController;
-use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -62,3 +63,8 @@ Route::resource('user', UserController::class);
 Route::get('customer/{id}/detail', [CustomerController::class, 'detail'])->name('customer.detail');
 Route::post('customer/{id}/upload', [CustomerController::class, 'uploadFiles'])->name('customer.uploadFiles');
 Route::delete('customer/file/{id}', [CustomerController::class, 'deleteFile'])->name('customer.deleteFile');
+
+Route::resource('auth', AuthController::class);
+Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
+
